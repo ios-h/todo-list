@@ -93,6 +93,7 @@ public class TaskService {
         }
 
         try {
+            taskRepository.writeDeleteLog(idx);
             int deletedRowCount = taskRepository.delete(idx);
             if (deletedRowCount <= 0) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

@@ -82,7 +82,6 @@ public class JdbcTaskRepository implements TaskRepository {
     public int delete(int idx) {
         String sql = "delete from task where idx = ?";
         int deletedRowCount = jdbcTemplate.update(sql, idx);
-        System.out.printf("RowCount = %d\n", deletedRowCount);
         return deletedRowCount;
     }
 
@@ -122,7 +121,21 @@ public class JdbcTaskRepository implements TaskRepository {
     }
 
     @Override
-    public int deleteLog(int idx) {
-        return 0;
+    public void writeDeleteLog(int idx) {
+        String sql = "select * from task where idx = ?";
+        jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
+            SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
+            jdbcInsert.withTableName("task_modify_log").usingGeneratedKeyColumns("idx");
+            Map<String, Object> parameters = new HashMap<>();
+
+            parameters.put("modifier", rs.getString("author"));
+            parameters.put("task_idx", rs.getInt("idx"));
+            parameters.put("modify_type", 4);
+            parameters.put("previous_title", rs.getString("title"));
+            parameters.put("previous_content", rs.getString("content"));
+            parameters.put("previous_status", rs.getInt("status"));
+            parameters.put("modified_at", LocalDateTime.now(ZoneId.of("Asia/Seoul")));
+            return jdbcInsert.execute(new MapSqlParameterSource(parameters));
+        }, idx);
     }
 }

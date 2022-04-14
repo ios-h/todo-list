@@ -1,7 +1,6 @@
 package kr.codesquad.todo.repository;
 
 import kr.codesquad.todo.domain.Task;
-import org.springframework.http.ResponseEntity;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -19,5 +18,5 @@ public interface TaskRepository {
 
     void writeChangeStatusLog(long idx, int newStatus) throws SQLException;
 
-    int deleteLog(int idx);
+    void writeDeleteLog(int idx);
 }
