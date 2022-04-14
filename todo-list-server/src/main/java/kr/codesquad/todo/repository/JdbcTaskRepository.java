@@ -40,6 +40,7 @@ public class JdbcTaskRepository implements TaskRepository {
         int key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters)).intValue();
         task.setIdx(key);
         task.setCreateAt(now);
+        writeAddLog(task);
 
         String sql = "select nickname from user where id = ?";
         jdbcTemplate.query(sql, (rs, rowCount) -> {
@@ -81,5 +82,22 @@ public class JdbcTaskRepository implements TaskRepository {
         int deletedRowCount = jdbcTemplate.update(sql, idx);
         System.out.printf("RowCount = %d\n", deletedRowCount);
         return deletedRowCount;
+    }
+
+    @Override
+    public int writeAddLog(Task task) {
+        SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
+        jdbcInsert.withTableName("task_modify_log").usingGeneratedKeyColumns("idx");
+        Map<String, Object> parameters = new HashMap<>();
+
+        parameters.put("modifier", task.getAuthor());
+        parameters.put("task_idx", task.getIdx());
+        parameters.put("modify_type", 1);
+        parameters.put("new_title", task.getTitle());
+        parameters.put("new_content", task.getContent());
+        parameters.put("new_status", task.getStatus());
+        parameters.put("modified_at", task.getCreateAt());
+
+        return jdbcInsert.execute(new MapSqlParameterSource(parameters));
     }
 }

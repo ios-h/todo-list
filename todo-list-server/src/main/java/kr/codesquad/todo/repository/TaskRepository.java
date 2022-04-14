@@ -13,4 +13,6 @@ public interface TaskRepository {
     Task changeStatus(long idx, int status);
 
     int delete(int idx);
+
+    int writeAddLog(Task task);
 }
