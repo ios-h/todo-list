@@ -53,4 +53,9 @@ public class TaskController {
     public ResponseEntity<Task> move(@RequestBody TaskStatusChangeDto dto) {
         return taskService.changeTaskStatus(dto.getIdx(), dto.getStatus());
     }
+
+    @DeleteMapping("/task/{idx}")
+    public ResponseEntity<Task> delete(@PathVariable int idx) {
+        return taskService.deleteTask(idx);
+    }
 }

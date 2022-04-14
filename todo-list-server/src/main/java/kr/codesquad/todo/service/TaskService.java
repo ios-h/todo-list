@@ -85,4 +85,21 @@ public class TaskService {
     public boolean isChangeInfoInvalid(long idx, int status) {
         return !(status == 1 || status == 2 || status == 3) || idx < 1;
     }
+
+    public ResponseEntity<Task> deleteTask(int idx) {
+        if (idx < 1) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        try {
+            int deletedRowCount = taskRepository.delete(idx);
+            if (deletedRowCount <= 0) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

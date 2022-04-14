@@ -1,6 +1,7 @@
 package kr.codesquad.todo.repository;
 
 import kr.codesquad.todo.domain.Task;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -66,5 +67,13 @@ public class JdbcTaskRepository implements TaskRepository {
             newTask.setCreateAt(rs.getTimestamp("created_at").toLocalDateTime());
             return newTask;
         }, idx);
+    }
+
+    @Override
+    public int delete(int idx) {
+        String sql = "delete from task where idx = ?";
+        int deletedRowCount = jdbcTemplate.update(sql, idx);
+        System.out.printf("RowCount = %d\n", deletedRowCount);
+        return deletedRowCount;
     }
 }
