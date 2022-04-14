@@ -86,7 +86,7 @@ public class TaskService {
         return !(status == 1 || status == 2 || status == 3) || idx < 1;
     }
 
-    public ResponseEntity<Task> deleteTask(int idx) {
+    public ResponseEntity<Void> deleteTask(int idx) {
         if (idx < 1) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

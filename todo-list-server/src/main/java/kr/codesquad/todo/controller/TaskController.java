@@ -54,8 +54,15 @@ public class TaskController {
         return taskService.changeTaskStatus(dto.getIdx(), dto.getStatus());
     }
 
+    @ApiOperation(value = "태스크 삭제", notes = "특정 idx 값을 가진 Task를 삭제합니다.\n/task/{idx}의 형태로 요청 path에 삭제하고자 하는 Task의 idx 값을 넣어주세요.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "요청이 성공했습니다."),
+            @ApiResponse(code = 400, message = "잘못 된 요청 입니다."),
+            @ApiResponse(code = 500, message = "서버에서 발생한 에러입니다."),
+            @ApiResponse(code = 404, message = "요청하신 idx에 해당하는 Task가 없습니다.")
+    })
     @DeleteMapping("/task/{idx}")
-    public ResponseEntity<Task> delete(@PathVariable int idx) {
+    public ResponseEntity<Void> delete(@PathVariable int idx) {
         return taskService.deleteTask(idx);
     }
 }
