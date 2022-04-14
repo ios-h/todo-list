@@ -74,6 +74,7 @@ public class TaskService {
         }
         Task task;
         try {
+            taskRepository.writeChangeStatusLog(idx, status);
             task = taskRepository.changeStatus(idx, status);
         } catch (Exception e) {
             e.printStackTrace();

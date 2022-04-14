@@ -8,6 +8,8 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.HashMap;
@@ -99,5 +101,28 @@ public class JdbcTaskRepository implements TaskRepository {
         parameters.put("modified_at", task.getCreateAt());
 
         return jdbcInsert.execute(new MapSqlParameterSource(parameters));
+    }
+
+    @Override
+    public void writeChangeStatusLog(long idx, int newStatus) throws SQLException {
+        String sql = "select * from task where idx = ?";
+        jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
+            SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
+            jdbcInsert.withTableName("task_modify_log").usingGeneratedKeyColumns("idx");
+            Map<String, Object> parameters = new HashMap<>();
+
+            parameters.put("modifier", rs.getString("author"));
+            parameters.put("task_idx", rs.getInt("idx"));
+            parameters.put("modify_type", 3);
+            parameters.put("previous_status", rs.getInt("status"));
+            parameters.put("new_status", newStatus);
+            parameters.put("modified_at", LocalDateTime.now(ZoneId.of("Asia/Seoul")));
+            return jdbcInsert.execute(new MapSqlParameterSource(parameters));
+        }, idx);
+    }
+
+    @Override
+    public int deleteLog(int idx) {
+        return 0;
     }
 }
