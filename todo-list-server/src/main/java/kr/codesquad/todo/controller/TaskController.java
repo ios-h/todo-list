@@ -62,7 +62,7 @@ public class TaskController {
             @ApiResponse(code = 404, message = "요청하신 idx에 해당하는 Task가 없습니다.")
     })
     @DeleteMapping("/task/{idx}")
-    public ResponseEntity<Void> delete(@PathVariable int idx) {
+    public ResponseEntity<Integer> delete(@PathVariable int idx) {
         return taskService.deleteTask(idx);
     }
 }

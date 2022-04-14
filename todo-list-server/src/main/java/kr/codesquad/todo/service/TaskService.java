@@ -87,7 +87,7 @@ public class TaskService {
         return !(status == 1 || status == 2 || status == 3) || idx < 1;
     }
 
-    public ResponseEntity<Void> deleteTask(int idx) {
+    public ResponseEntity<Integer> deleteTask(int idx) {
         if (idx < 1) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -102,6 +102,6 @@ public class TaskService {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(idx);
     }
 }
