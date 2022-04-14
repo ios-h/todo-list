@@ -75,4 +75,8 @@ public class Task {
     public LocalDateTime getCreateAt() {
         return createAt;
     }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 }

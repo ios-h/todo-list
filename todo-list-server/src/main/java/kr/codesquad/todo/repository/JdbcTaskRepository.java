@@ -28,9 +28,10 @@ public class JdbcTaskRepository implements TaskRepository {
         jdbcInsert.withTableName("task").usingGeneratedKeyColumns("idx");
 
         Map<String, Object> parameters = new HashMap<>();
+        String authorId = task.getAuthor();
 
         parameters.put("title", task.getTitle());
-        parameters.put("author", task.getAuthor());
+        parameters.put("author", authorId);
         parameters.put("content", task.getContent());
         LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 
@@ -40,15 +41,20 @@ public class JdbcTaskRepository implements TaskRepository {
         task.setIdx(key);
         task.setCreateAt(now);
 
+        String sql = "select nickname from user where id = ?";
+        jdbcTemplate.query(sql, (rs, rowCount) -> {
+            task.setAuthor(rs.getString("nickname"));
+            return task;
+        }, authorId);
+
         return task;
     }
 
     @Override
     public List<Task> getAll() {
-        String sql = "select * from task order by created_at desc";
+        String sql = "select * from task join user on task.author = user.id";
         return jdbcTemplate.query(sql, (rs, rowCount) -> {
-            Task task = new Task(rs.getString("title"), rs.getString("content"), rs.getString("author"), rs.getInt("status"));
-
+            Task task = new Task(rs.getString("title"), rs.getString("content"), rs.getString("nickname"), rs.getInt("status"));
             task.setCreateAt(rs.getTimestamp("created_at").toLocalDateTime());
             task.setIdx(rs.getInt("idx"));
             return task;
@@ -60,9 +66,9 @@ public class JdbcTaskRepository implements TaskRepository {
         String updateSql = "update task set status = ? where idx = ?";
         jdbcTemplate.update(updateSql, status, idx);
 
-        String selectSql = "select * from task where idx = ?";
+        String selectSql = "select * from task join user on task.author = user.id where task.idx = ?";
         return jdbcTemplate.queryForObject(selectSql, (rs, rowNum) -> {
-            Task newTask = new Task(rs.getString("title"), rs.getString("content"), rs.getString("author"), rs.getInt("status"));
+            Task newTask = new Task(rs.getString("title"), rs.getString("content"), rs.getString("nickname"), rs.getInt("status"));
             newTask.setIdx(rs.getLong("idx"));
             newTask.setCreateAt(rs.getTimestamp("created_at").toLocalDateTime());
             return newTask;
