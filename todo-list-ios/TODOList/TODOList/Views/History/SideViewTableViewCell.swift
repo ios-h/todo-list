@@ -6,19 +6,16 @@ class SideViewTableViewCell: UITableViewCell {
     
     let emojiView: UIImageView = {
         let view = UIImageView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     let historyView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     var historyStackView: UIStackView = {
         let view = UIStackView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .vertical
         view.spacing = 8
         view.alignment = .leading
@@ -77,20 +74,20 @@ class SideViewTableViewCell: UITableViewCell {
     }
     
     private func setConstraints() {
-        historyStackView.topAnchor.constraint(equalTo: historyView.topAnchor).isActive = true
-        historyStackView.leadingAnchor.constraint(equalTo: historyView.leadingAnchor).isActive = true
-        historyStackView.trailingAnchor.constraint(equalTo: historyView.trailingAnchor).isActive = true
-        historyStackView.bottomAnchor.constraint(equalTo: historyView.bottomAnchor).isActive = true
+        historyStackView.snp.makeConstraints {
+            $0.edges.equalTo(historyView)
+        }
         
-        emojiView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
-        emojiView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16).isActive = true
-        emojiView.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        emojiView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        emojiView.snp.makeConstraints {
+            $0.leading.top.equalTo(contentView).offset(16)
+            $0.width.height.equalTo(40)
+        }
         
-        historyView.leadingAnchor.constraint(equalTo: emojiView.trailingAnchor, constant: 16).isActive = true
-        historyView.topAnchor.constraint(equalTo: emojiView.topAnchor).isActive = true
-        historyView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
-        historyView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).isActive = true
+        historyView.snp.makeConstraints {
+            $0.leading.equalTo(emojiView.snp.trailing).offset(16)
+            $0.top.equalTo(emojiView.snp.top)
+            $0.trailing.bottom.equalTo(contentView).offset(-16)
+        }
     }
     
     func updateStackView(history: HistoryInfo) {

@@ -1,3 +1,4 @@
+import SnapKit
 import UIKit
 
 class MemoTableViewCell: UITableViewCell {
@@ -6,7 +7,6 @@ class MemoTableViewCell: UITableViewCell {
     
     private let stackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 3
         stackView.alignment = .leading
@@ -65,10 +65,10 @@ class MemoTableViewCell: UITableViewCell {
     }
     
     private func setConstraints() {
-        stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16).isActive = true
-        stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).isActive = true
+        stackView.snp.makeConstraints {
+            $0.top.leading.equalTo(contentView).offset(16)
+            $0.trailing.bottom.equalTo(contentView).offset(-16)
+        }
     }
     
     func updateStackView(memo: Memo) {

@@ -1,3 +1,4 @@
+import SnapKit
 import UIKit
 
 class MemoContainerView: UIView {
@@ -8,13 +9,11 @@ class MemoContainerView: UIView {
 
     private let containerTitleView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     let categoryLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: FontFactory.bold, size: 20)
         label.textColor = UIColor(named: ColorAsset.black)
         label.textAlignment = .left
@@ -23,7 +22,6 @@ class MemoContainerView: UIView {
     
     private let countView: UIView = {
         let label = UIView()
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -35,13 +33,11 @@ class MemoContainerView: UIView {
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 15
         label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var addButton: UIButton = {
         let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.setBackgroundImage(UIImage(named: "add"), for: .normal)
         button.addAction(UIAction(handler: { _ in
             self.delegate?.addButtonDidTap(containerType: self.containerType!)
@@ -54,7 +50,6 @@ class MemoContainerView: UIView {
         tableView.sectionHeaderHeight = 0
         tableView.tableHeaderView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 0, height: CGFloat.leastNormalMagnitude)))
         tableView.separatorStyle = .none
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(MemoTableViewCell.self, forCellReuseIdentifier: MemoTableViewCell.identifier)
         tableView.backgroundColor = .clear
         return tableView
@@ -86,31 +81,35 @@ class MemoContainerView: UIView {
     }
     
     private func setConstraints() {
+        categoryLabel.snp.makeConstraints {
+            $0.leading.centerY.equalTo(containerTitleView)
+        }
         
-        categoryLabel.leadingAnchor.constraint(equalTo: containerTitleView.leadingAnchor).isActive = true
-        categoryLabel.centerYAnchor.constraint(equalTo: containerTitleView.centerYAnchor).isActive = true
+        countLabel.snp.makeConstraints {
+            $0.width.height.centerX.centerY.equalTo(countView)
+        }
         
-        countLabel.widthAnchor.constraint(equalTo: countView.widthAnchor).isActive = true
-        countLabel.heightAnchor.constraint(equalTo: countView.heightAnchor).isActive = true
-        countLabel.centerXAnchor.constraint(equalTo: countView.centerXAnchor).isActive = true
-        countLabel.centerYAnchor.constraint(equalTo: countView.centerYAnchor).isActive = true
+        countView.snp.makeConstraints {
+            $0.leading.equalTo(categoryLabel.snp.trailing).offset(10)
+            $0.centerY.equalTo(containerTitleView)
+            $0.width.equalTo(30)
+            $0.height.equalTo(countView.snp.width)
+        }
         
-        countView.leadingAnchor.constraint(equalTo: categoryLabel.trailingAnchor, constant: 10).isActive = true
-        countView.centerYAnchor.constraint(equalTo: containerTitleView.centerYAnchor).isActive = true
-        countView.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        countView.heightAnchor.constraint(equalTo: countView.widthAnchor).isActive = true
+        addButton.snp.makeConstraints {
+            $0.trailing.equalTo(containerTitleView)
+            $0.centerY.equalTo(containerTitleView)
+        }
         
-        addButton.trailingAnchor.constraint(equalTo: containerTitleView.trailingAnchor).isActive = true
-        addButton.centerYAnchor.constraint(equalTo: containerTitleView.centerYAnchor).isActive = true
+        containerTitleView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(50)
+        }
         
-        containerTitleView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        containerTitleView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        containerTitleView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        containerTitleView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        
-        tableView.topAnchor.constraint(equalTo: containerTitleView.bottomAnchor).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: containerTitleView.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: containerTitleView.trailingAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(containerTitleView.snp.bottom)
+            $0.leading.trailing.equalTo(containerTitleView)
+            $0.bottom.equalToSuperview()
+        }
     }
 }

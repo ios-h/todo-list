@@ -1,3 +1,4 @@
+import SnapKit
 import UIKit
 
 class HeaderView: UIView {
@@ -6,13 +7,11 @@ class HeaderView: UIView {
         let label = UILabel()
         label.font = UIFont(name: FontFactory.normal, size: 40)
         label.text = "TO-DO LIST"
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var sideMenuButton: UIButton = {
         let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.setBackgroundImage(UIImage(named: "menu"), for: .normal)
         button.addAction(UIAction(handler: { _ in
             self.delegate?.headerViewButtonDidTap()
@@ -42,12 +41,15 @@ class HeaderView: UIView {
     }
     
     private func setConstraints() {
-        titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 48).isActive = true
+        titleLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(48)
+        }
 
-        sideMenuButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        sideMenuButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
-        sideMenuButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        sideMenuButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -50).isActive = true
+        sideMenuButton.snp.makeConstraints {
+            $0.width.height.equalTo(20)
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalTo(-50)
+        }
     }
 }

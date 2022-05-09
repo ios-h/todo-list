@@ -1,3 +1,4 @@
+import SnapKit
 import UIKit
 
 class SideView: UIView {
@@ -6,7 +7,6 @@ class SideView: UIView {
     
     private let emptyView: UIView = {
        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         return view
     }()
@@ -14,7 +14,6 @@ class SideView: UIView {
     private lazy var closeButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(named: "close"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.addAction(UIAction(handler: { _ in
             self.delegate?.sideViewCloseButtonDidTap()
         }), for: .touchUpInside)
@@ -26,7 +25,6 @@ class SideView: UIView {
         tableView.backgroundColor = .clear
         //현재 아래와 같이 구분선 설정을 없애도 사이드 뷰 내부의 테이블 뷰에 적용되지 않음
         tableView.separatorStyle = .none
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(SideViewTableViewCell.self, forCellReuseIdentifier: SideViewTableViewCell.identifier)
         return tableView
     }()
@@ -52,20 +50,21 @@ class SideView: UIView {
     }
     
     private func setConstraints() {
-        emptyView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        emptyView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        emptyView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        emptyView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1/7) .isActive = true
+        emptyView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(70)
+        }
+
+        closeButton.snp.makeConstraints {
+            $0.width.height.equalTo(20)
+            $0.centerY.equalTo(emptyView).offset(25)
+            $0.trailing.equalTo(emptyView).offset(-50)
+        }
         
-        closeButton.centerYAnchor.constraint(equalTo: emptyView.centerYAnchor, constant: 25).isActive = true
-        closeButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
-        closeButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        closeButton.trailingAnchor.constraint(equalTo: emptyView.trailingAnchor, constant: -50).isActive = true
-        
-        historyTableView.topAnchor.constraint(equalTo: emptyView.bottomAnchor, constant: 20).isActive = true
-        historyTableView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        historyTableView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        historyTableView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        historyTableView.snp.makeConstraints {
+            $0.top.equalTo(emptyView.snp.bottom).offset(20)
+            $0.bottom.leading.trailing.equalToSuperview()
+        }
     }
 
 }
