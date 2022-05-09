@@ -1,3 +1,4 @@
+import SnapKit
 import UIKit
 
 class PopupViewController: UIViewController {
@@ -16,7 +17,6 @@ class PopupViewController: UIViewController {
         view.memoContainerType = containerType
         view.layer.cornerRadius = 10
         view.backgroundColor = .white
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -40,8 +40,12 @@ class PopupViewController: UIViewController {
     private func addViews() {
         view.addSubview(popupCardView)
         view.backgroundColor = .black.withAlphaComponent(0.4)
-        popupCardView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        popupCardView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        popupCardView.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+        }
+//        popupCardView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        popupCardView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
     private func setTapGesture() {

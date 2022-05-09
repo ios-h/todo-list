@@ -1,10 +1,10 @@
+import SnapKit
 import UIKit
 
 final class MemoCanvasViewController: UIViewController {
     
     private var memoCanvasView: MemoCanvasView = {
         let view = MemoCanvasView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -48,14 +48,18 @@ final class MemoCanvasViewController: UIViewController {
     
     private func setLayout() {
         memoCanvasView.addSubview(memoCanvasView.memoContainerStackView)
-        memoCanvasView.memoContainerStackView.leadingAnchor.constraint(equalTo: memoCanvasView.leadingAnchor, constant: 48).isActive = true
-        memoCanvasView.memoContainerStackView.topAnchor.constraint(equalTo: memoCanvasView.topAnchor).isActive = true
-        memoCanvasView.memoContainerStackView.widthAnchor.constraint(equalTo: memoCanvasView.widthAnchor, multiplier: 0.75).isActive = true
-        memoCanvasView.memoContainerStackView.heightAnchor.constraint(equalTo: memoCanvasView.heightAnchor).isActive = true
+        
+        memoCanvasView.memoContainerStackView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(48)
+            $0.top.height.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(0.75)
+        }
         
         for ( _ , tableViewController ) in memoTableViewControllers {
-            tableViewController.memoContainerView.topAnchor.constraint(equalTo: memoCanvasView.memoContainerStackView.topAnchor).isActive = true
-            tableViewController.memoContainerView.bottomAnchor.constraint(equalTo: memoCanvasView.memoContainerStackView.bottomAnchor).isActive = true
+            tableViewController.memoContainerView.snp.makeConstraints {
+                $0.top.equalTo(memoCanvasView.memoContainerStackView.snp.top)
+                $0.bottom.equalTo(memoCanvasView.memoContainerStackView.snp.bottom)
+            }
         }
     }
     

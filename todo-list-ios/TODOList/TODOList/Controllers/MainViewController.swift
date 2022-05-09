@@ -1,16 +1,16 @@
+import SnapKit
 import UIKit
 
 final class MainViewController: UIViewController {
     
     private var headerView: HeaderView = {
         let view = HeaderView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     private var sideView: SideView = {
         let view = SideView()
-        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
         return view
     }()
     
@@ -23,13 +23,12 @@ final class MainViewController: UIViewController {
         
         let memoCanvasViewController = MemoCanvasViewController()
         addChild(memoCanvasViewController)
-        view.addSubview(memoCanvasViewController.view) // 안하면 뷰 안 보임
-        memoCanvasViewController.didMove(toParent: self) // 종속관계만 생김
+        view.addSubview(memoCanvasViewController.view)
+        memoCanvasViewController.didMove(toParent: self)
         self.memoCanvasViewController = memoCanvasViewController
         
         self.headerView.delegate = self
         
-        self.sideView.backgroundColor = .white
         self.sideView.delegate = self
         self.sideView.historyTableView.dataSource = self
         self.sideView.historyTableView.delegate = self
@@ -52,20 +51,23 @@ final class MainViewController: UIViewController {
     }
     
     private func setLayout(){
-        headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30).isActive = true
-        headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        headerView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.08).isActive = true
+        headerView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalToSuperview().offset(30)
+            $0.height.equalToSuperview().multipliedBy(0.08)
+        }
         
-        memoCanvasViewController?.view.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 20).isActive = true
-        memoCanvasViewController?.view.leadingAnchor.constraint(equalTo: headerView.leadingAnchor).isActive = true
-        memoCanvasViewController?.view.trailingAnchor.constraint(equalTo: headerView.trailingAnchor).isActive = true
-        memoCanvasViewController?.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -25).isActive = true
+        memoCanvasViewController?.view.snp.makeConstraints({
+            $0.top.equalTo(headerView.snp.bottom).offset(20)
+            $0.leading.equalTo(headerView.snp.leading)
+            $0.trailing.equalTo(headerView.snp.trailing)
+            $0.bottom.equalToSuperview().offset(-25)
+        })
         
-        sideView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
-        sideView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-        sideView.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.3).isActive = true
-        sideView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        sideView.snp.makeConstraints {
+            $0.top.bottom.trailing.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(0.3)
+        }
     }
     
     /// sideMenuButton 클릭 시 SideView를 보여준다.
