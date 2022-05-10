@@ -37,6 +37,14 @@ enum Task {
 
 class MemoManager {
     
+    private var networkHandler: NetworkHandler
+    private var jsonHandler: JSONHandler
+    
+    init(networkHandler: NetworkHandler, jsonHandler: JSONHandler) {
+        self.networkHandler = networkHandler
+        self.jsonHandler = jsonHandler
+    }
+    
     enum ObserverInfoKey: String {
         case memoDidAdd = "memoDidAdd"
     }
@@ -76,7 +84,7 @@ class MemoManager {
      */
     
     func sendModelDataToNetworkManager(memo: Memo, taskType: Task, methodType: HTTPMethod) {
-        guard let data = JSONHandler.convertObjectToJSON(model: memo.toRequestEntity()) else { return }
+        guard let data = jsonHandler.convertObjectToJSON(model: memo.toRequestEntity()) else { return }
         guard let url = convertStringToURL(url: EndPoint.url + taskType.path) else { return }
 //        NetworkHandler.request(data: data, url: url, methodType: methodType, responseHandler: self) { data in
 //            guard let memoResponse = JSONHandler.convertJSONToObject(data: data, targetType: MemoPostResponse.self) else {
@@ -88,13 +96,13 @@ class MemoManager {
 //            NotificationCenter.default.post(name: .memoDidAdd, object: self, userInfo: [UserInfoKeys.memo:memo])
 //        }
         
-        NetworkHandler.mockRequest(data: data, url: url, methodType: methodType, responseHandler: self) { data in
-            guard let memoResponse = JSONHandler.convertJSONToObject(data: data, targetType: MemoPostResponse.self) else {
-                self.handleFailure(error: HTTPError.invalidResponseError)
+        networkHandler.mockRequest(data: data, url: url, methodType: methodType, responseHandler: self) { [weak self] data in
+            guard let memoResponse = self?.jsonHandler.convertJSONToObject(data: data, targetType: MemoPostResponse.self) else {
+                self?.handleFailure(error: HTTPError.invalidResponseError)
                 return
             }
             let memo = memoResponse.toResponseDto()
-            self.memoTableViewModels[.todo]?.insert(memo, at: 0)
+            self?.memoTableViewModels[.todo]?.insert(memo, at: 0)
             NotificationCenter.default.post(name: .memoDidAdd, object: self, userInfo: [UserInfoKeys.memo:memo])
         }
     }

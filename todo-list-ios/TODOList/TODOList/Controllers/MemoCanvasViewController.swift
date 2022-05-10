@@ -9,7 +9,7 @@ final class MemoCanvasViewController: UIViewController {
     }()
     
     private (set) var memoTableViewControllers: [MemoStatus: MemoContainerViewController] = [:]
-    private (set) var memoManager: MemoManager = MemoManager()
+    private (set) var memoManager: MemoManager = MemoManager(networkHandler: NetworkHandler(), jsonHandler: JSONHandler())
     
     override func didMove(toParent parent: UIViewController?) {
         super.didMove(toParent: parent)
