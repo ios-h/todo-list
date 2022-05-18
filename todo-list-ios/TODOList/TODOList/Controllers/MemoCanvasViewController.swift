@@ -10,12 +10,17 @@ final class MemoCanvasViewController: UIViewController {
     }()
     
     private (set) var memoTableViewControllers: [MemoStatus: MemoContainerViewController] = [:]
-    private (set) var memoManager: MemoManager = MemoManager(networkHandler: NetworkHandler(), jsonHandler: JSONHandler())
+    private var memoManager: MemoManager?
+    
+    convenience init(memoManager: MemoManager) {
+        self.init()
+        self.memoManager = memoManager
+    }
     
     override func didMove(toParent parent: UIViewController?) {
         super.didMove(toParent: parent)
         view = memoCanvasView
-        
+                
         initProperties()
         setLayout()
         subscribeObserver()
@@ -28,6 +33,7 @@ final class MemoCanvasViewController: UIViewController {
     }
     
     private func addTableViewController(containerType: MemoStatus) {
+        guard let memoManager = self.memoManager else { return }
         let tableViewController = MemoContainerViewController(containerType: containerType, memoManager: memoManager)
         memoTableViewControllers[containerType] = tableViewController
         
@@ -65,11 +71,11 @@ final class MemoCanvasViewController: UIViewController {
     }
     
     func removeSelectedMemoModel(containerType: MemoStatus, indexPath: IndexPath) {
-        memoManager.removeSelectedMemoModel(containerType: containerType, index: indexPath.section)
+        memoManager?.removeSelectedMemoModel(containerType: containerType, index: indexPath.section)
     }
     
     func insertSelectedMemoModel(containerType: MemoStatus, indexPath: IndexPath, memoModel: Memo) {
-        memoManager.insertSelectedMemoModel(containerType: containerType, index: indexPath.section, memo: memoModel)
+        memoManager?.insertSelectedMemoModel(containerType: containerType, index: indexPath.section, memo: memoModel)
     }
     
     private func subscribeObserver() {
