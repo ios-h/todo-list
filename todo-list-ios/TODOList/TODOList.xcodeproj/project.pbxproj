@@ -13,8 +13,10 @@
 		B563DB73280BF90400D503FC /* MemoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B563DB72280BF90300D503FC /* MemoRequest.swift */; };
 		B563DB75280BFD5800D503FC /* RequestEntityConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = B563DB74280BFD5800D503FC /* RequestEntityConvertible.swift */; };
 		B563DB78280C131700D503FC /* sample.json in Resources */ = {isa = PBXBuildFile; fileRef = B563DB77280C131700D503FC /* sample.json */; };
+		B58BF4F528352A810034C33C /* RepositoryApplicable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58BF4F428352A810034C33C /* RepositoryApplicable.swift */; };
 		B58D833528001988008A811C /* MemoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58D833428001988008A811C /* MemoTableViewCell.swift */; };
 		B58D833728001A9C008A811C /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58D833628001A9C008A811C /* Memo.swift */; };
+		B5E2BDBA283485B800BB7E2F /* MemoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E2BDB9283485B800BB7E2F /* MemoRepository.swift */; };
 		B5EC66D327FADD9C0042EFCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EC66D227FADD9C0042EFCF /* AppDelegate.swift */; };
 		B5EC66D527FADD9C0042EFCF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EC66D427FADD9C0042EFCF /* SceneDelegate.swift */; };
 		B5EC66D727FADD9C0042EFCF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EC66D627FADD9C0042EFCF /* MainViewController.swift */; };
@@ -53,8 +55,10 @@
 		B563DB72280BF90300D503FC /* MemoRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoRequest.swift; sourceTree = "<group>"; };
 		B563DB74280BFD5800D503FC /* RequestEntityConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestEntityConvertible.swift; sourceTree = "<group>"; };
 		B563DB77280C131700D503FC /* sample.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample.json; sourceTree = "<group>"; };
+		B58BF4F428352A810034C33C /* RepositoryApplicable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryApplicable.swift; sourceTree = "<group>"; };
 		B58D833428001988008A811C /* MemoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoTableViewCell.swift; sourceTree = "<group>"; };
 		B58D833628001A9C008A811C /* Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
+		B5E2BDB9283485B800BB7E2F /* MemoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoRepository.swift; sourceTree = "<group>"; };
 		B5EC66CF27FADD9C0042EFCF /* TODOList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TODOList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5EC66D227FADD9C0042EFCF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5EC66D427FADD9C0042EFCF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -118,6 +122,15 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		B58BF4F328352A540034C33C /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				B5E2BDB9283485B800BB7E2F /* MemoRepository.swift */,
+				B58BF4F428352A810034C33C /* RepositoryApplicable.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
 		B58D8338280047C7008A811C /* Memo */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,6 +191,7 @@
 		B5EC66D127FADD9C0042EFCF /* TODOList */ = {
 			isa = PBXGroup;
 			children = (
+				B58BF4F328352A540034C33C /* Repository */,
 				D0FAF3B1280694840096A520 /* Network */,
 				B5EC66F327FEC3E10042EFCF /* Delegates */,
 				D0850A7627FEB27A009C60E5 /* Resources */,
@@ -420,6 +434,8 @@
 				B5FBCFD22808A1C100494A56 /* JSONHandler.swift in Sources */,
 				D0A471662808549A00AC9179 /* NetworkHandler.swift in Sources */,
 				D0FAF3D52806F7910096A520 /* MemoContainerViewDelegate.swift in Sources */,
+				B58BF4F528352A810034C33C /* RepositoryApplicable.swift in Sources */,
+				B5E2BDBA283485B800BB7E2F /* MemoRepository.swift in Sources */,
 				B58D833728001A9C008A811C /* Memo.swift in Sources */,
 				B5EC66D727FADD9C0042EFCF /* MainViewController.swift in Sources */,
 				D0850A7827FEB294009C60E5 /* ResourceFactory.swift in Sources */,
