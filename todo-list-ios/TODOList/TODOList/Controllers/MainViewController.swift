@@ -22,7 +22,7 @@ final class MainViewController: UIViewController {
         
         view.backgroundColor = UIColor(named: ColorAsset.gray6)
         
-        let memoCanvasViewController = MemoCanvasViewController()
+        let memoCanvasViewController = createMemoCanvasViewController()
         addChild(memoCanvasViewController)
         view.addSubview(memoCanvasViewController.view)
         memoCanvasViewController.didMove(toParent: self)
@@ -36,6 +36,12 @@ final class MainViewController: UIViewController {
         
         addViews()
         setLayout()
+    }
+    
+    private func createMemoCanvasViewController() -> MemoCanvasViewController {
+        let memoRepository: RepositoryApplicable = MemoRepository(networkHandler: NetworkHandler(), jsonHandler: JSONHandler())
+        let memoManager = MemoManager(memoRepository: memoRepository)
+        return MemoCanvasViewController(memoManager: memoManager)
     }
     
     override func viewDidLayoutSubviews() {
