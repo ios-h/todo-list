@@ -37,12 +37,10 @@ enum Task {
 
 class MemoManager {
     
-    private var networkHandler: NetworkHandler
-    private var jsonHandler: JSONHandler
-    
-    init(networkHandler: NetworkHandler, jsonHandler: JSONHandler) {
-        self.networkHandler = networkHandler
-        self.jsonHandler = jsonHandler
+    private var memoRepository: RepositoryApplicable?
+
+    init(memoRepository: RepositoryApplicable) {
+        self.memoRepository = memoRepository
     }
     
     enum ObserverInfoKey: String {
@@ -78,45 +76,14 @@ class MemoManager {
         return url
     }
     
-    /*
-        현재 서버가 비활성화된 상태이기 때문에,
-        mockRequest를 대신 호출하여, 미리 준비된 JSON을 응답데이터로 받아서 처리하도록 했음
-     */
-    
     func sendModelDataToNetworkManager(memo: Memo, taskType: Task, methodType: HTTPMethod) {
-        guard let data = jsonHandler.convertObjectToJSON(model: memo.toRequestEntity()) else { return }
         guard let url = convertStringToURL(url: EndPoint.url + taskType.path) else { return }
-//        NetworkHandler.request(data: data, url: url, methodType: methodType, responseHandler: self) { data in
-//            guard let memoResponse = JSONHandler.convertJSONToObject(data: data, targetType: MemoPostResponse.self) else {
-//                self.handleFailure(error: HTTPError.invalidResponseError)
-//                return
-//            }
-//            let memo = memoResponse.toResponseDto()
-//            self.memoTableViewModels[.todo]?.insert(memo, at: 0)
-//            NotificationCenter.default.post(name: .memoDidAdd, object: self, userInfo: [UserInfoKeys.memo:memo])
-//        }
-        
-        networkHandler.mockRequest(data: data, url: url, methodType: methodType, responseHandler: self) { [weak self] data in
-            guard let memoResponse = self?.jsonHandler.convertJSONToObject(data: data, targetType: MemoPostResponse.self) else {
-                self?.handleFailure(error: HTTPError.invalidResponseError)
-                return
-            }
+
+        memoRepository?.sendApiRequest(entity: memo.toRequestEntity(), url: url, methodType: methodType) { [weak self] data in
+            guard let memoResponse = self?.memoRepository?.convertApiResponseToObject(data: data, targetType: MemoPostResponse.self) else { return }
             let memo = memoResponse.toResponseDto()
             self?.memoTableViewModels[.todo]?.insert(memo, at: 0)
             NotificationCenter.default.post(name: .memoDidAdd, object: self, userInfo: [UserInfoKeys.memo:memo])
         }
     }
 }
-
-extension MemoManager: HttpResponseHandlable {
-    func handleSuccess(data: Data, successHandler: ((Data) -> Void)?) {
-        guard let successHandler = successHandler else { return }
-        successHandler(data)
-    }
-    
-    func handleFailure(error: Error) {
-        let logger = Logger()
-        logger.error("\(error.localizedDescription)")
-    }
-}
-
