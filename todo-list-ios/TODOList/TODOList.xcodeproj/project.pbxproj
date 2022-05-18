@@ -30,6 +30,7 @@
 		B5FBCFD22808A1C100494A56 /* JSONHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FBCFD12808A1C100494A56 /* JSONHandler.swift */; };
 		D019328E27FFD12E00A9CE20 /* MemoCanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D019328D27FFD12E00A9CE20 /* MemoCanvasViewController.swift */; };
 		D019329B2800998600A9CE20 /* PopupCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D019329A2800998600A9CE20 /* PopupCardView.swift */; };
+		D0846C722834B13E006F9D55 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0846C712834B13E006F9D55 /* CoreDataManager.swift */; };
 		D0850A7827FEB294009C60E5 /* ResourceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0850A7727FEB294009C60E5 /* ResourceFactory.swift */; };
 		D0850A7A27FFB545009C60E5 /* MemoContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0850A7927FFB545009C60E5 /* MemoContainerView.swift */; };
 		D0999D9F2804789D0045491A /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0999D9E2804789D0045491A /* PopupViewController.swift */; };
@@ -71,6 +72,7 @@
 		B5FBCFD12808A1C100494A56 /* JSONHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONHandler.swift; sourceTree = "<group>"; };
 		D019328D27FFD12E00A9CE20 /* MemoCanvasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoCanvasViewController.swift; sourceTree = "<group>"; };
 		D019329A2800998600A9CE20 /* PopupCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupCardView.swift; sourceTree = "<group>"; };
+		D0846C712834B13E006F9D55 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		D0850A7727FEB294009C60E5 /* ResourceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceFactory.swift; sourceTree = "<group>"; };
 		D0850A7927FFB545009C60E5 /* MemoContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoContainerView.swift; sourceTree = "<group>"; };
 		D0999D9E2804789D0045491A /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
@@ -233,6 +235,14 @@
 			path = Delegates;
 			sourceTree = "<group>";
 		};
+		D0846C6D2834B12D006F9D55 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				D0846C712834B13E006F9D55 /* CoreDataManager.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		D0850A7627FEB27A009C60E5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -245,6 +255,7 @@
 		D0B4198E27FD636500DBAFDB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D0846C6D2834B12D006F9D55 /* Service */,
 				B563DB76280C100800D503FC /* Protocols */,
 				B58D833B28004802008A811C /* Memo */,
 				B58D833A280047FC008A811C /* History */,
@@ -412,6 +423,7 @@
 				B58D833728001A9C008A811C /* Memo.swift in Sources */,
 				B5EC66D727FADD9C0042EFCF /* MainViewController.swift in Sources */,
 				D0850A7827FEB294009C60E5 /* ResourceFactory.swift in Sources */,
+				D0846C722834B13E006F9D55 /* CoreDataManager.swift in Sources */,
 				B5EC66D327FADD9C0042EFCF /* AppDelegate.swift in Sources */,
 				B50C57B428047E9F0007F417 /* MemoContainerViewController.swift in Sources */,
 				B5EC66F227FC17BA0042EFCF /* SideViewTableViewCell.swift in Sources */,

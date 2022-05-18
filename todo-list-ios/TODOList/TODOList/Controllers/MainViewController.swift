@@ -4,8 +4,6 @@ import UIKit
 
 final class MainViewController: UIViewController {
     
-    var container: NSPersistentContainer!
-    
     private var headerView: HeaderView = {
         let view = HeaderView()
         return view
@@ -21,10 +19,6 @@ final class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        guard container != nil else {
-            fatalError("This view needs a persistent container.")
-        }
         
         view.backgroundColor = UIColor(named: ColorAsset.gray6)
         

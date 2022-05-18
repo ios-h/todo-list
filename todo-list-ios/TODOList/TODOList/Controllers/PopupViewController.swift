@@ -44,8 +44,6 @@ class PopupViewController: UIViewController {
         popupCardView.snp.makeConstraints {
             $0.centerX.centerY.equalToSuperview()
         }
-//        popupCardView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        popupCardView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
     private func setTapGesture() {
