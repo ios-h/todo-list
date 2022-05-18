@@ -1,5 +1,7 @@
 import Foundation
 
 protocol RepositoryApplicable {
-    func sendApiRequest(data: Data, url: URL, methodType: HTTPMethod, successHandler: @escaping (Data)->Void)
+    
+    func convertApiResponseToObject<T: Decodable>(data: Data, targetType: T.Type) -> T?
+    func sendApiRequest<T: Encodable>(entity: T, url: URL, methodType: HTTPMethod, successHandler: @escaping (Data)->Void)
 }
