@@ -9,7 +9,7 @@ import CoreData
 import Foundation
 
 extension CoreDataManager {
-    // TodoEntity 생성 메소드
+    // Create
     func create(title: String, content: String, status: MemoStatus, completion: (() -> ())? = nil) {
         mainContext.perform {
             let todoEntity = TodoEntity(context: self.mainContext)
@@ -23,7 +23,7 @@ extension CoreDataManager {
         }
     }
     
-    // 저장된 데이터를 가져오는 메소드
+    // Read
     func fetch() -> [TodoEntity] {
         var todoList = [TodoEntity]()
         
@@ -42,7 +42,7 @@ extension CoreDataManager {
         return todoList
     }
     
-    // Update 메소드
+    // Update
     func update(entity: TodoEntity, title: String, content: String, status: MemoStatus, completion: (() -> ())? = nil) {
         mainContext.perform {
             entity.title = title
@@ -51,6 +51,14 @@ extension CoreDataManager {
             
             self.saveContext()
             completion?()
+        }
+    }
+    
+    // Delete
+    func delete(entity: TodoEntity) {
+        mainContext.perform {
+            self.mainContext.delete(entity)
+            self.saveContext()
         }
     }
 }
