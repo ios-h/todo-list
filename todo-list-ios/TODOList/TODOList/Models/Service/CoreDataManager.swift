@@ -13,84 +13,37 @@ class CoreDataManager {
     
     private init() { }
     
+    var persistentContainer: NSPersistentContainer? // container를 저장할 속성
+    
     var mainContext: NSManagedObjectContext {
-        return persistentContainer.viewContext
+        guard let context = persistentContainer?.viewContext else {
+            fatalError()
+        }
+        return context
     }
     
-    var list = [TodoEntity]()
     
-    lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "TodoModel")
-        container.loadPersistentStores { description, error in
+    func setUp(modelName: String) {
+        persistentContainer = NSPersistentContainer(name: "TodoModel")
+        persistentContainer?.loadPersistentStores(completionHandler: { desc, error in
             if let error = error {
-                fatalError("Unable to load persistent stores: \(error)")
+                fatalError(error.localizedDescription)
             }
-        }
-        return container
-    }()
+        })
+    }
     
     
     func saveContext() {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        mainContext.perform {
+            if self.mainContext.hasChanges {
+                do {
+                    try self.mainContext.save()
+                    print("Save Context!")
+                } catch {
+                    let nserror = error as NSError
+                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                }
             }
         }
-    }
-    
-    func create(title: String, content: String, status: String) {
-        // 메모리에 저장
-        let todoEntity = TodoEntity(context: mainContext)
-        todoEntity.title = title
-        todoEntity.content = content
-        todoEntity.status = status
-        todoEntity.insertDate = Date()
-        
-        // 데이터를 실제로 저장
-        saveContext()
-        
-        list.insert(todoEntity, at: 0)
-    }
-    
-    // Read
-    func fetch() {
-        list.removeAll()
-        
-        let request: NSFetchRequest<TodoEntity> = TodoEntity.fetchRequest() // fetchReuest
-
-        let sortByInsertDateDesc = NSSortDescriptor(key: "insertDate", ascending: false)
-        request.sortDescriptors = [sortByInsertDateDesc]
-        
-        do {
-            let result = try mainContext.fetch(request)
-            list.append(contentsOf: result)
-        } catch {
-            print(error)
-        }
-    }
-    
-    
-    // Update
-    func update(todo: TodoEntity, content: String, title: String, status: String) {
-        todo.content = content
-        todo.title = title
-        todo.status = status
-        saveContext()
-    }
-    
-    // Delete
-    func delete(todo: TodoEntity) {
-        mainContext.delete(todo)
-        saveContext()
-    }
-    
-    func delete(at indexPath: IndexPath) {
-        let target = list[indexPath.row]
-        delete(todo: target)
-        list.remove(at: indexPath.row)
     }
 }

@@ -11,6 +11,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
         window?.rootViewController = MainViewController()
         window?.makeKeyAndVisible()
+        
+        CoreDataManager.shared.setUp(modelName: "TodoModel")
         return true
     }
 
