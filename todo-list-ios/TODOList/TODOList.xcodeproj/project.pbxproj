@@ -30,6 +30,7 @@
 		B5EC66F527FEC3F90042EFCF /* HeaderViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EC66F427FEC3F90042EFCF /* HeaderViewDelegate.swift */; };
 		B5FBCFD0280885F400494A56 /* MemoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FBCFCF280885F400494A56 /* MemoManager.swift */; };
 		B5FBCFD22808A1C100494A56 /* JSONHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FBCFD12808A1C100494A56 /* JSONHandler.swift */; };
+		D00D7F792836143800408F1B /* CoreDataManager+Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00D7F782836143800408F1B /* CoreDataManager+Todo.swift */; };
 		D019328E27FFD12E00A9CE20 /* MemoCanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D019328D27FFD12E00A9CE20 /* MemoCanvasViewController.swift */; };
 		D019329B2800998600A9CE20 /* PopupCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D019329A2800998600A9CE20 /* PopupCardView.swift */; };
 		D0846C722834B13E006F9D55 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0846C712834B13E006F9D55 /* CoreDataManager.swift */; };
@@ -74,6 +75,7 @@
 		B5EC66F427FEC3F90042EFCF /* HeaderViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewDelegate.swift; sourceTree = "<group>"; };
 		B5FBCFCF280885F400494A56 /* MemoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemoManager.swift; path = TODOList/Models/MemoManager.swift; sourceTree = SOURCE_ROOT; };
 		B5FBCFD12808A1C100494A56 /* JSONHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONHandler.swift; sourceTree = "<group>"; };
+		D00D7F782836143800408F1B /* CoreDataManager+Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataManager+Todo.swift"; sourceTree = "<group>"; };
 		D019328D27FFD12E00A9CE20 /* MemoCanvasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoCanvasViewController.swift; sourceTree = "<group>"; };
 		D019329A2800998600A9CE20 /* PopupCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupCardView.swift; sourceTree = "<group>"; };
 		D0846C712834B13E006F9D55 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				D0846C712834B13E006F9D55 /* CoreDataManager.swift */,
+				D00D7F782836143800408F1B /* CoreDataManager+Todo.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -434,6 +437,7 @@
 				B5FBCFD22808A1C100494A56 /* JSONHandler.swift in Sources */,
 				D0A471662808549A00AC9179 /* NetworkHandler.swift in Sources */,
 				D0FAF3D52806F7910096A520 /* MemoContainerViewDelegate.swift in Sources */,
+				D00D7F792836143800408F1B /* CoreDataManager+Todo.swift in Sources */,
 				B58BF4F528352A810034C33C /* RepositoryApplicable.swift in Sources */,
 				B5E2BDBA283485B800BB7E2F /* MemoRepository.swift in Sources */,
 				B58D833728001A9C008A811C /* Memo.swift in Sources */,
