@@ -41,4 +41,16 @@ extension CoreDataManager {
         }
         return todoList
     }
+    
+    // Update 메소드
+    func update(entity: TodoEntity, title: String, content: String, status: MemoStatus, completion: (() -> ())? = nil) {
+        mainContext.perform {
+            entity.title = title
+            entity.content = content
+            entity.status = status.description
+            
+            self.saveContext()
+            completion?()
+        }
+    }
 }
