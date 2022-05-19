@@ -22,4 +22,23 @@ extension CoreDataManager {
             completion?()
         }
     }
+    
+    // 저장된 데이터를 가져오는 메소드
+    func fetch() -> [TodoEntity] {
+        var todoList = [TodoEntity]()
+        
+        mainContext.performAndWait {
+            let request: NSFetchRequest<TodoEntity> = TodoEntity.fetchRequest()
+            
+            let sortByDate = NSSortDescriptor(key: #keyPath(TodoEntity.insertDate), ascending: true)
+            request.sortDescriptors = [sortByDate]
+            
+            do {
+                todoList = try mainContext.fetch(request)
+            } catch {
+                print(error)
+            }
+        }
+        return todoList
+    }
 }
