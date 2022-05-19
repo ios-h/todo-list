@@ -16,7 +16,7 @@ extension CoreDataManager {
             todoEntity.title = title
             todoEntity.content = content
             todoEntity.status = status.description
-            todoEntity.insertDate = Date()
+            todoEntity.createdDate = Date()
             
             self.saveContext()
             completion?()
@@ -30,7 +30,7 @@ extension CoreDataManager {
         mainContext.performAndWait {
             let request: NSFetchRequest<TodoEntity> = TodoEntity.fetchRequest()
             
-            let sortByDate = NSSortDescriptor(key: #keyPath(TodoEntity.insertDate), ascending: true)
+            let sortByDate = NSSortDescriptor(key: #keyPath(TodoEntity.createdDate), ascending: true)
             request.sortDescriptors = [sortByDate]
             
             do {
