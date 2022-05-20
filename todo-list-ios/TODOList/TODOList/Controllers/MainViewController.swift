@@ -10,6 +10,9 @@ final class MainViewController: UIViewController {
         self.init()
         
         memoCanvasViewController = createMemoCanvasViewController(coreDataManager: coreDataManager)
+        
+        memoList = coreDataManager.fetch()
+        print(memoList)
     }
     
     private var headerView: HeaderView = {

@@ -64,9 +64,11 @@ extension MemoContainerViewController: UITableViewDataSource & UITableViewDelega
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MemoTableViewCell.identifier, for: indexPath) as? MemoTableViewCell,
               let memoManager = memoManager,
               let containerType = containerType,
-              let memo = memoManager.getDesignatedMemoModel(containerType: containerType, index: indexPath.section) else { return UITableViewCell() }
-        
-        cell.updateStackView(memo: memo)
+              let memo = memoManager.getDesignatedMemoModel(containerType: containerType, index: indexPath.section) else {
+            return UITableViewCell() }
+        var memoList = [Memo]()
+        memoList = memoManager.fetchMemoList()
+        cell.updateStackView(memo: memoList[indexPath.row])
         cell.updateStyle()
         return cell
     }

@@ -14,15 +14,15 @@ struct MemoRepository: RepositoryApplicable {
         self.jsonHandler = jsonHandler
     }
     
-    func fetchData() -> [TodoEntity] {
-        let entities = coreDataManager.fetch()
-        return entities
-    }
-    
     func createMemo(memo: Memo, completion: (() -> ())?) {
         coreDataManager.create(title: memo.title, content: memo.content, status: memo.status.description) {
             completion?()
         }
+    }
+    
+    func fetchMemoList() -> [TodoEntity] {
+        let entities = coreDataManager.fetch()
+        return entities
     }
     
     func sendApiRequest<T: Encodable>(entity: T, url: URL, methodType: HTTPMethod, successHandler: @escaping (Data)->Void) {

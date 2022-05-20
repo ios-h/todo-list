@@ -42,18 +42,24 @@ class MemoManager {
     
     private (set) var memoTableViewModels: [MemoStatus: [Memo]] = [.todo:[], .progress:[], .done:[]]
     
-//    func fetchMemoModel() -> [TodoEntity] {
-//        guard let entities = memoRepository?.fetchData() else {
-//            return [TodoEntity]()
-//        }
-//        return entities
-//    }
-    
     func createMemo(memo: Memo, completion: (() -> ())? = nil) {
         memoRepository?.createMemo(memo: memo, completion: {
-            NotificationCenter.default.post(name: .memoDidAdd, object: nil)
+            self.appendMemoModels(containerType: memo.status, memos: [memo])
+            NotificationCenter.default.post(name: .memoDidAdd, object: self, userInfo: [UserInfoKeys.memo: memo])
             completion?()
         })
+    }
+    
+    func fetchMemoList() -> [Memo] {
+        guard let todoEntityList = memoRepository?.fetchMemoList() else {
+            return [Memo]()
+        }
+        
+        var memoList = [Memo]()
+        for todo in todoEntityList {
+            memoList.append(Memo(title: todo.title!, content: todo.content!, name: "Selina", status: MemoStatus.todo))
+        }
+        return memoList
     }
     
     func removeSelectedMemoModel(containerType: MemoStatus, index: Int) {
