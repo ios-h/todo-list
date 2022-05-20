@@ -10,12 +10,12 @@ import Foundation
 
 extension CoreDataManager {
     // Create
-    func create(title: String, content: String, status: MemoStatus, completion: (() -> ())? = nil) {
+    func create(title: String, content: String, status: String, completion: (() -> ())? = nil) {
         mainContext.perform {
             let todoEntity = TodoEntity(context: self.mainContext)
             todoEntity.title = title
             todoEntity.content = content
-            todoEntity.status = status.description
+            todoEntity.status = status
             todoEntity.createdDate = Date()
             
             self.saveContext()

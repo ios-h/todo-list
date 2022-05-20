@@ -4,6 +4,14 @@ import UIKit
 
 final class MainViewController: UIViewController {
     
+    var memoList = [TodoEntity]() // 모든 메모 데이터를 저장할 배열
+    
+    convenience init(coreDataManager: CoreDataManager) {
+        self.init()
+        
+        memoCanvasViewController = createMemoCanvasViewController(coreDataManager: coreDataManager)
+    }
+    
     private var headerView: HeaderView = {
         let view = HeaderView()
         return view
@@ -22,7 +30,10 @@ final class MainViewController: UIViewController {
         
         view.backgroundColor = UIColor(named: ColorAsset.gray6)
         
-        let memoCanvasViewController = createMemoCanvasViewController()
+        guard let memoCanvasViewController = memoCanvasViewController else {
+            return
+        }
+        
         addChild(memoCanvasViewController)
         view.addSubview(memoCanvasViewController.view)
         memoCanvasViewController.didMove(toParent: self)
@@ -38,8 +49,8 @@ final class MainViewController: UIViewController {
         setLayout()
     }
     
-    private func createMemoCanvasViewController() -> MemoCanvasViewController {
-        let memoRepository: RepositoryApplicable = MemoRepository(networkHandler: NetworkHandler(), jsonHandler: JSONHandler())
+    private func createMemoCanvasViewController(coreDataManager: CoreDataManager) -> MemoCanvasViewController {
+        let memoRepository: RepositoryApplicable = MemoRepository(coreDataManager: coreDataManager, networkHandler: NetworkHandler(), jsonHandler: JSONHandler())
         let memoManager = MemoManager(memoRepository: memoRepository)
         return MemoCanvasViewController(memoManager: memoManager)
     }

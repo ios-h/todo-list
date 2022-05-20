@@ -8,11 +8,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         if #available(iOS 13.0, *) { return true }
         
+        let coreDataManager = CoreDataManager()
         window = UIWindow()
-        window?.rootViewController = MainViewController()
+        window?.rootViewController = MainViewController(coreDataManager: coreDataManager)
         window?.makeKeyAndVisible()
-        
-        CoreDataManager.shared.setUp(modelName: "TodoModel")
         return true
     }
 

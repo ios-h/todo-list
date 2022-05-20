@@ -8,15 +8,16 @@
 import CoreData
 import Foundation
 
-class CoreDataManager {
-    static let shared = CoreDataManager()
-    
-    private init() { }
+final class CoreDataManager {
+    init() {
+        setUp(modelName: "TodoModel")
+    }
     
     var persistentContainer: NSPersistentContainer? // container를 저장할 속성
     
     var mainContext: NSManagedObjectContext {
         guard let context = persistentContainer?.viewContext else {
+            print("persistContainer ", persistentContainer)
             fatalError()
         }
         return context
@@ -24,7 +25,7 @@ class CoreDataManager {
     
     
     func setUp(modelName: String) {
-        persistentContainer = NSPersistentContainer(name: "TodoModel")
+        persistentContainer = NSPersistentContainer(name: modelName)
         persistentContainer?.loadPersistentStores(completionHandler: { desc, error in
             if let error = error {
                 fatalError(error.localizedDescription)

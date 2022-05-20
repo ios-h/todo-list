@@ -1,13 +1,6 @@
 import Foundation
 import OSLog
 
-extension NSNotification.Name {
-    static let memoDidAdd = NSNotification.Name("MemoDidAddNotification")
-    static let memoDidUpdate = NSNotification.Name("MemoDidUpdateNotification")
-    static let memoDidDelete = NSNotification.Name("MemoDidDeleteNotification")
-    static let networkError = NSNotification.Name("Network Error")
-}
-
 enum UserInfoKeys {
     static let memo = "Memo"
 }
@@ -48,6 +41,20 @@ class MemoManager {
     }
     
     private (set) var memoTableViewModels: [MemoStatus: [Memo]] = [.todo:[], .progress:[], .done:[]]
+    
+//    func fetchMemoModel() -> [TodoEntity] {
+//        guard let entities = memoRepository?.fetchData() else {
+//            return [TodoEntity]()
+//        }
+//        return entities
+//    }
+    
+    func createMemo(memo: Memo, completion: (() -> ())? = nil) {
+        memoRepository?.createMemo(memo: memo, completion: {
+            NotificationCenter.default.post(name: .memoDidAdd, object: nil)
+            completion?()
+        })
+    }
     
     func removeSelectedMemoModel(containerType: MemoStatus, index: Int) {
         memoTableViewModels[containerType]?.remove(at: index)

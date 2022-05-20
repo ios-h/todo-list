@@ -39,7 +39,9 @@ extension MemoContainerViewController: PopupViewDelegate {
 
 extension MemoContainerViewController: MemoContainerViewDelegate {
     func addButtonDidTap(containerType: MemoStatus) {
-        let popupViewController = PopupViewController(containerType: containerType)
+        guard let memoManager = memoManager else { return }
+        
+        let popupViewController = PopupViewController(containerType: containerType, memoManager: memoManager)
         popupViewController.modalPresentationStyle = .overCurrentContext
         popupViewController.delegate = self
         present(popupViewController, animated: true)

@@ -6,6 +6,7 @@ class PopupViewController: UIViewController {
     weak var delegate: PopupViewDelegate?
     private var alertTitle: String = ""
     private var containerType: MemoStatus?
+    private var memoManager: MemoManager?
     var memoTitle: String = ""
     var memoContent: String = ""
     
@@ -20,10 +21,11 @@ class PopupViewController: UIViewController {
         return view
     }()
     
-    convenience init(containerType: MemoStatus) {
+    convenience init(containerType: MemoStatus, memoManager: MemoManager) {
         self.init()
         
         self.containerType = containerType
+        self.memoManager = memoManager
         self.alertTitle = "\(containerType) 추가하기"
     }
     
@@ -61,9 +63,11 @@ extension PopupViewController: PopupCardViewDelegate {
     
     func popupCardOkButtonDidTap(title: String?, content: String?, status: MemoStatus?) {
         guard let title = title, let content = content, let status = status else { return }
-        let memo = Memo(title: title, content: content, name: "sampleI", status: status)
-        self.delegate?.popupViewAddButtonDidTap(memo: memo)
-        self.dismiss(animated: true)
+        
+        let memo = Memo(title: title, content: content, name: "Selina", status: status)
+        memoManager?.createMemo(memo: memo, completion: {
+            self.dismiss(animated: true)
+        })
     }
 }
 
