@@ -92,6 +92,7 @@ extension MemoContainerViewController: UITableViewDataSource & UITableViewDelega
         let memo = memos[indexPath.section]
         
         let popupViewController = PopupViewController()
+        popupViewController.alertTitle = containerType.rawValue
         popupViewController.memoTitle = memo.title
         popupViewController.memoContent = memo.content
         popupViewController.modalPresentationStyle = .overCurrentContext

@@ -4,9 +4,10 @@ import UIKit
 class PopupViewController: UIViewController {
 
     weak var delegate: PopupViewDelegate?
-    private var alertTitle: String = ""
+//    private var alertTitle: String = ""
     private var containerType: MemoStatus?
     private var memoManager: MemoManager?
+    var alertTitle: String = ""
     var memoTitle: String = ""
     var memoContent: String = ""
     
