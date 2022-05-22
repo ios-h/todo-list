@@ -47,7 +47,7 @@ extension CoreDataManager {
         mainContext.perform {
             entity.title = title
             entity.content = content
-            entity.status = status.description
+            entity.status = status.rawValue
             
             self.saveContext()
             completion?()

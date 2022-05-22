@@ -15,7 +15,7 @@ struct MemoRepository: RepositoryApplicable {
     }
     
     func createMemo(memo: Memo, completion: (() -> ())?) {
-        coreDataManager.create(title: memo.title, content: memo.content, status: memo.status.description) {
+        coreDataManager.create(title: memo.title, content: memo.content, status: memo.status.rawValue) {
             completion?()
         }
     }

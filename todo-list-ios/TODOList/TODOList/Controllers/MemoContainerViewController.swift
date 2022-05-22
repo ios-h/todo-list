@@ -19,7 +19,7 @@ final class MemoContainerViewController: UIViewController {
         self.memoManager = memoManager
         memoContainerView.countLabel.text = "0"
         memoContainerView.containerType = containerType
-        memoContainerView.categoryLabel.text = " \(containerType)"
+        memoContainerView.categoryLabel.text = " \(containerType.rawValue)"
         view = memoContainerView
     }
     
@@ -66,9 +66,7 @@ extension MemoContainerViewController: UITableViewDataSource & UITableViewDelega
               let containerType = containerType,
               let memo = memoManager.getDesignatedMemoModel(containerType: containerType, index: indexPath.section) else {
             return UITableViewCell() }
-        var memoList = [Memo]()
-        memoList = memoManager.fetchMemoList()
-        cell.updateStackView(memo: memoList[indexPath.row])
+        cell.updateStackView(memo: memo)
         cell.updateStyle()
         return cell
     }

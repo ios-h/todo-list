@@ -34,6 +34,19 @@ class MemoManager {
 
     init(memoRepository: RepositoryApplicable) {
         self.memoRepository = memoRepository
+        
+        let memoList = fetchMemoList()
+        
+        for memo in memoList {
+            switch memo.status {
+            case .todo:
+                memoTableViewModels[.todo]?.append(memo)
+            case .progress:
+                memoTableViewModels[.progress]?.append(memo)
+            case .done:
+                memoTableViewModels[.done]?.append(memo)
+            }
+        }
     }
     
     enum ObserverInfoKey: String {
@@ -57,7 +70,16 @@ class MemoManager {
         
         var memoList = [Memo]()
         for todo in todoEntityList {
-            memoList.append(Memo(title: todo.title!, content: todo.content!, name: "Selina", status: MemoStatus.todo))
+            let memoStatus: MemoStatus
+            switch todo.status {
+            case "해야 할 일":
+                memoStatus = MemoStatus.todo
+            case "하고있는 일":
+                memoStatus = MemoStatus.progress
+            default:
+                memoStatus = MemoStatus.done
+            }
+            memoList.append(Memo(title: todo.title!, content: todo.content!, name: "Selina", status: memoStatus))
         }
         return memoList
     }

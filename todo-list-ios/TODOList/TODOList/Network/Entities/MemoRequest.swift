@@ -4,9 +4,9 @@ struct MemoPostRequest: Encodable {
     private let title: String
     private let content: String
     private let author: String
-    private let status: Int
+    private let status: String
     
-    init(title: String, content: String, author: String, status: Int) {
+    init(title: String, content: String, author: String, status: String) {
         self.title = title
         self.content = content
         self.author = author

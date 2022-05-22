@@ -26,7 +26,7 @@ class PopupViewController: UIViewController {
         
         self.containerType = containerType
         self.memoManager = memoManager
-        self.alertTitle = "\(containerType) 추가하기"
+        self.alertTitle = "\(containerType.rawValue) 추가하기"
     }
     
     override func viewDidLoad() {
