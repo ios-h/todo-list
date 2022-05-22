@@ -102,6 +102,10 @@ extension MemoContainerViewController: UITableViewDataSource & UITableViewDelega
             self.present(popupViewController, animated: true)
         }
     }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 
 extension MemoContainerViewController: UITableViewDragDelegate {
